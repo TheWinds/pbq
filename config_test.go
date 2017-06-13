@@ -29,20 +29,20 @@ func TestSaveConfig(t *testing.T) {
 func TestReadConfig(t *testing.T) {
 	Convey("test read config file", t, func() {
 		config := new(Config)
-		err := config.ReadFromFile()
+		config, err := ReadFromFile()
 		So(err, ShouldBeNil)
 		So(config.AccessKey, ShouldEqual, "AccessKeyAccessKeyAccessKey")
 		So(config.SecretKey, ShouldEqual, "SecretKeySecretKeySecretKey")
 		So(config.UploadNameLayout, ShouldEqual, "$U-$filename")
 		So(config.BucketName, ShouldEqual, "blog")
 		//del file
-		if _, err := os.Stat(ConfingFilePath); err == nil {
-			err = os.Remove(ConfingFilePath)
+		if _, err := os.Stat(ConfigFilePath); err == nil {
+			err = os.Remove(ConfigFilePath)
 			if err != nil {
 				t.Fatal(err)
 			}
 		}
-		err = config.ReadFromFile()
+		config, err = ReadFromFile()
 		So(err, ShouldNotBeNil)
 		So(config, ShouldBeNil)
 	})
@@ -53,7 +53,7 @@ func TestFormatUploadFileName(t *testing.T) {
 		config := &Config{UploadNameLayout: ""}
 		ret := config.FormatUploadFileName("a.png")
 		fmt.Println(ret)
-		config.UploadNameLayout = "$YYYY/$MM/$DD/$FILENAME"
+		config.UploadNameLayout = "%YYYY/%MM/%DD/%FILENAME"
 		ret = config.FormatUploadFileName("a.png")
 		fmt.Println(ret)
 		So(ret, ShouldEqual, time.Now().Format("2006/01/02/a.png"))

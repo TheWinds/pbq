@@ -18,14 +18,17 @@ func init() {
 		log.Fatal("can not get user home dir", err)
 	}
 	HomeDir := curUser.HomeDir
-	ConfingFileDir = HomeDir + "/.pbq"
-	ConfingFilePath = HomeDir + "/confing.json"
+	ConfigFileDir = HomeDir + "/.pbq"
+	ConfigFilePath = ConfigFileDir + "/config.json"
 }
+
+// DefaultLayout default file format layout
+const DefaultLayout = "%YYYY%MM%DD%UNIX-%FILENAME"
 
 // HomeDir user home dir
 var (
-	ConfingFileDir  = ""
-	ConfingFilePath = ""
+	ConfigFileDir  = ""
+	ConfigFilePath = ""
 )
 
 // Config user config
@@ -46,43 +49,39 @@ func (config *Config) SaveToFile() error {
 	if err != nil {
 		return err
 	}
-	return saveFile(ConfingFilePath, configBytes)
+	return saveFile(ConfigFilePath, configBytes)
 }
 
 // ReadFromFile read config from ~/.pbq/config.json
-func (config *Config) ReadFromFile() error {
-	fileBytes, readErr := readFile(ConfingFilePath)
+func ReadFromFile() (*Config, error) {
+	fileBytes, readErr := readFile(ConfigFilePath)
 	if readErr != nil {
-		config = nil
-		return readErr
+		return nil, readErr
 	}
 	newConfig := new(Config)
-	marshalErr := json.Unmarshal(fileBytes, config)
+	marshalErr := json.Unmarshal(fileBytes, newConfig)
 	if marshalErr != nil {
-		config = nil
-		return marshalErr
+		return nil, marshalErr
 	}
 	// decode secret key
-	secretKeyBytes, decodeErr := base64.StdEncoding.DecodeString(config.SecretKey)
+	secretKeyBytes, decodeErr := base64.StdEncoding.DecodeString(newConfig.SecretKey)
 	if decodeErr != nil {
-		config = nil
-		return decodeErr
+		return nil, decodeErr
 	}
-	config.SecretKey = string(secretKeyBytes)
-	config = newConfig
-	return nil
+	newConfig.SecretKey = string(secretKeyBytes)
+	return newConfig, nil
 }
 
 // FormatUploadFileName format upload fileName
 func (config *Config) FormatUploadFileName(fileName string) string {
 	mapTimeToken := make(map[string]string, 0)
-	mapTimeToken["$YYYY"] = "2006"
-	mapTimeToken["$MM"] = "01"
-	mapTimeToken["$DD"] = "02"
-	defaultLayout := "$YYYY$MM$DD$UNIX-$FILENAME"
+	mapTimeToken["%YYYY"] = "2006"
+	mapTimeToken["%MM"] = "01"
+	mapTimeToken["%DD"] = "02"
+
 	layout := config.UploadNameLayout
-	if !strings.Contains(layout, "$FILENAME") {
-		layout = defaultLayout
+	if !strings.Contains(layout, "%FILENAME") {
+		layout = DefaultLayout
 	}
 	for k, v := range mapTimeToken {
 		layout = strings.Replace(layout, k, v, 1)
@@ -90,16 +89,16 @@ func (config *Config) FormatUploadFileName(fileName string) string {
 	timeNow := time.Now()
 
 	ret := timeNow.Format(layout)
-	ret = strings.Replace(ret, "$FILENAME", fileName, 1)
-	ret = strings.Replace(ret, "$UNIX", fmt.Sprintf("%d", timeNow.Unix()), 1)
+	ret = strings.Replace(ret, "%FILENAME", fileName, 1)
+	ret = strings.Replace(ret, "%UNIX", fmt.Sprintf("%d", timeNow.Unix()), 1)
 
 	return ret
 }
 
 func saveFile(fileName string, datas []byte) error {
 
-	if _, err := os.Stat(ConfingFileDir); err != nil {
-		err = os.MkdirAll(ConfingFileDir, 0755)
+	if _, err := os.Stat(ConfigFileDir); err != nil {
+		err = os.MkdirAll(ConfigFileDir, 0755)
 		if err != nil {
 			return err
 		}
