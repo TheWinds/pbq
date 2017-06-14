@@ -78,8 +78,8 @@ func UploadFile(fileNmae string) {
 		domain := domains[0]
 		fmt.Println()
 		fmt.Println(fmt.Sprintf("URL: http://%s/%s", domain, key))
-		fmt.Println(fmt.Sprintf("MarkDown: [](http://%s/%s)", domain, key))
-		clipboard.WriteAll(fmt.Sprintf("[](http://%s/%s)", domain, key))
+		fmt.Println(fmt.Sprintf("MarkDown: ![](http://%s/%s)", domain, key))
+		clipboard.WriteAll(fmt.Sprintf("![](http://%s/%s)", domain, key))
 		showTip("MarkDown code has been copied to the clipboard 🍺 ")
 
 	} else {
