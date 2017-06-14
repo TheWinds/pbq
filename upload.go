@@ -8,6 +8,7 @@ import (
 	"github.com/qiniu/api.v6/auth/digest"
 	"github.com/qiniu/api.v6/rs"
 
+	"github.com/atotto/clipboard"
 	"qiniupkg.com/api.v7/conf"
 	"qiniupkg.com/api.v7/kodo"
 	"qiniupkg.com/api.v7/kodocli"
@@ -39,7 +40,7 @@ func UploadFile(fileNmae string) {
 	filePath := path.Join(dir, fileNmae)
 
 	// create a client
-	c := kodo.New(0, nil)
+	client := kodo.New(0, nil)
 	// upload policy
 	key := config.FormatUploadFileName(fileNmae)
 	policy := &kodo.PutPolicy{
@@ -47,7 +48,7 @@ func UploadFile(fileNmae string) {
 		Expires: 3600,
 	}
 	// make upload token
-	token := c.MakeUptoken(policy)
+	token := client.MakeUptoken(policy)
 
 	// build a uploader
 	zone := 0
@@ -57,11 +58,10 @@ func UploadFile(fileNmae string) {
 
 	// call PutFile
 	res := uploader.PutFile(nil, &ret, token, key, filePath, nil)
-	// 打印返回的信息
-	fmt.Println(ret)
-	// 打印出错信息
+
 	if res != nil {
-		fmt.Println("io.Put failed:", res)
+		showTip("Failed to upload file ❗️ ")
+		showTip("Error:" + res.Error())
 		return
 	}
 
@@ -74,13 +74,21 @@ func UploadFile(fileNmae string) {
 		showTip("Failed to get domain ❗️ ")
 		return
 	}
-	for _, domain := range domains {
+	if len(domains) > 0 {
+		domain := domains[0]
+		fmt.Println()
 		fmt.Println(fmt.Sprintf("URL: http://%s/%s", domain, key))
 		fmt.Println(fmt.Sprintf("MarkDown: [](http://%s/%s)", domain, key))
+		clipboard.WriteAll(fmt.Sprintf("[](http://%s/%s)", domain, key))
+		showTip("MarkDown code has been copied to the clipboard 🍺 ")
+
+	} else {
+		showTip("Please make sure there is at least one domain ⚠️ ")
 	}
+
 }
 
-// GetDomainsOfBucket
+// GetDomainsOfBucket get bucket domains
 func GetDomainsOfBucket(mac *digest.Mac, bucket string) (domains []string, err error) {
 	domains = make([]string, 0)
 	client := rs.New(mac)
