@@ -1,6 +1,8 @@
 # PBQ (Picture Bed QiNiu)
 This tool can help you to easily upload pictures to QiNiu Cloud, you can also use it to generate Markdown code.
 
+## [👉 中文文档](https://github.com/TheWinds/pbq/blob/master/README_Zhcn.md)
+
 ## Command
 |Command|Description|
 |:-|-|
