@@ -23,3 +23,11 @@ This tool can help you to easily upload pictures to QiNiu Cloud, you can also us
 - If you do not set the Layout, the default is `%YYYY%MM%DD%UNIX-%FILENAME` => `201706141497407382-test.png`
 
 [![asciicast](https://asciinema.org/a/6ga6ab4k5jp9g6wf90g3kh7a8.png)](https://asciinema.org/a/6ga6ab4k5jp9g6wf90g3kh7a8)
+
+## Download
+|Platform|Link|
+|-|-|
+|Linux 64bit|[Download](http://ohrkcds09.bkt.clouddn.com/pbq-1.0-linux64.zip)|
+|Darwin 64bit|[Download](http://ohrkcds09.bkt.clouddn.com/pbq-1.0-darwin64.zip)|
+|Windows 64bit|[Download](http://ohrkcds09.bkt.clouddn.com/pbq-1.0-win64.zip)|
+|Windows 32bit|[Download](http://ohrkcds09.bkt.clouddn.com/pbq-1.0-win32.zip)|
