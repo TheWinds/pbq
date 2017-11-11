@@ -3,7 +3,7 @@
 
 ## 命令
 |命令|描述
-|:-|-|
+|:--|---|
 |`pqb <fileName>` | 上传图片到你的七牛云相应bucket中 |
 |`pqb account <AccessKey> <SecretKey> <BucketName>` | 配置账户信息|
 |`pqb layout <Layout>` | 设置文件名布局|
@@ -11,7 +11,7 @@
 ## 关于文件名布局
 
 |占位符|描述|例子|
-|:-|-|-|
+|:---|---|---|
 |`%FILENAME` | 文件名(必选,否则使用默认文件名布局) |test.png|
 |`%YYYY` | 当前年 |2017|
 |`%MM` | 当前月 |01|
@@ -24,7 +24,7 @@
 
 ## 下载
 |平台|下载链接|
-|-|-|
+|---|---|
 |Linux 64bit|[Download](http://ohrkcds09.bkt.clouddn.com/pbq-1.0-linux64.zip)|
 |Darwin 64bit|[Download](http://ohrkcds09.bkt.clouddn.com/pbq-1.0-darwin64.zip)|
 |Windows 64bit|[Download](http://ohrkcds09.bkt.clouddn.com/pbq-1.0-win64.zip)|

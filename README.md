@@ -5,15 +5,15 @@ This tool can help you to easily upload pictures to QiNiu Cloud, you can also us
 
 ## Command
 |Command|Description|
-|:-|-|
-|`pqb <fileName>` | Upload picture to your bucket |
-|`pqb account <AccessKey> <SecretKey> <BucketName>` | Configure the account|
-|`pqb layout <Layout>` | Set the file name layout|
+|:---|---|
+|`pbq <fileName>` | Upload picture to your bucket |
+|`pbq account <AccessKey> <SecretKey> <BucketName>` | Configure the account|
+|`pbq layout <Layout>` | Set the file name layout|
 
 ## About File Name Layout
 
 |Placeholder|Description|Examle|
-|:-|-|-|
+|:---|---|---|
 |`%FILENAME` | filename(Required,Otherwise use the default file name layout) |test.png|
 |`%YYYY` |current year |2017|
 |`%MM` | current month |01|
@@ -26,7 +26,7 @@ This tool can help you to easily upload pictures to QiNiu Cloud, you can also us
 
 ## Download
 |Platform|Link|
-|-|-|
+|---|---|
 |Linux 64bit|[Download](http://ohrkcds09.bkt.clouddn.com/pbq-1.0-linux64.zip)|
 |Darwin 64bit|[Download](http://ohrkcds09.bkt.clouddn.com/pbq-1.0-darwin64.zip)|
 |Windows 64bit|[Download](http://ohrkcds09.bkt.clouddn.com/pbq-1.0-win64.zip)|
