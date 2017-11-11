@@ -4,9 +4,9 @@
 ## 命令
 |命令|描述
 |:--|---|
-|`pqb <fileName>` | 上传图片到你的七牛云相应bucket中 |
-|`pqb account <AccessKey> <SecretKey> <BucketName>` | 配置账户信息|
-|`pqb layout <Layout>` | 设置文件名布局|
+|`pbq <fileName>` | 上传图片到你的七牛云相应bucket中 |
+|`pbq account <AccessKey> <SecretKey> <BucketName>` | 配置账户信息|
+|`pbq layout <Layout>` | 设置文件名布局|
 
 ## 关于文件名布局
 
